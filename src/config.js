@@ -1,6 +1,25 @@
 import path from 'path'
 import _ from 'lodash'
 
+const requireProcessEnv = (name) => {
+	if (!process.env[name]) {
+		throw new Error('You must set the ' + name + ' environment variable')
+	}
+	return process.env[name]
+}
+
+
+if (process.env.NODE_ENV !== 'production') {
+	const dotenv = require('dotenv-safe')
+	dotenv.load({
+		path: path.join(__dirname, '../.env'),
+		sample: path.join(__dirname, '../.env.example')
+	})
+}
+
+const user = requireProcessEnv('USER_DB')
+const psw = requireProcessEnv('USER_PWD')
+
 const config = {
 	all: {
 		env: process.env.NODE_ENV || 'development',
@@ -17,7 +36,7 @@ const config = {
 	},
 	test: {
 		mongo: {
-			uri: 'mongodb://localhost/rest-test',
+			uri: 'mongodb://localhost/software-PV-test',
 			options: {
 				debug: false
 			}
@@ -25,7 +44,7 @@ const config = {
 	},
 	development: {
 		mongo: {
-			uri: 'mongodb://localhost/rest-dev',
+			uri: 'mongodb://localhost/software-PV-dev',
 			options: {
 				debug: true
 			}
@@ -35,7 +54,7 @@ const config = {
 		ip: process.env.IP || undefined,
 		port: process.env.PORT || 8080,
 		mongo: {
-			uri: process.env.MONGODB_URI || 'mongodb://localhost/rest'
+			uri: process.env.MONGODB_URI || `mongodb://${user}:${psw}@ds113626.mlab.com:13626/software-pv`
 		}
 	}
 }

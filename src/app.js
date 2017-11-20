@@ -1,18 +1,13 @@
-
-// grab our dependencies
 import http from 'http'
 import { env, mongo, port, ip } from './config'
-import express from "./services/express";
-import api from "./api"
 import mongoose from './services/mongoose'
-const app = express(api)
+import express from './services/express'
+import api from './api'
 
-//const port = process.env.PORT || 8080
+const app = express(api)
 const server = http.createServer(app)
 
-
-// configure our aplication
-//mongoose.connect(mongo.uri);
+mongoose.connect(mongo.uri,  { useMongoClient: true });
 
 // start our server
 setImmediate(() => {
