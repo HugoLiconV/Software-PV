@@ -36,10 +36,40 @@ test('GET /products 200', async () => {
 	expect(Array.isArray(body)).toBe(true)
 })
 
-test('GET /users/:id 200', async () => {
+test('GET /products/:id 200', async () => {
 	const { status, body } = await request(app())
 		.get(`/api/${product.id}`)
 	expect(status).toBe(200)
 	expect(typeof body).toEqual('object')
 	expect(body.id).toEqual(product.id)
+})
+
+test('GET /products/:id 404', async () => {
+	const { status } = await request(app())
+		.get('/api/123456789098765432123456')
+	expect(status).toBe(404)
+})
+
+test('PUT /products/:id 200', async () => {
+	const { status, body } = await request(app())
+		.put(`/api/${product.id}`)
+		.send({nombre: "test", cantidad: "2", precioVenta: "1",  precioCompra: "0"})
+	expect(status).toBe(200)
+	expect(body.nombre).toEqual('test')
+	expect(body.cantidad).toEqual('2')
+	expect(body.precioVenta).toEqual('1')
+	expect(body.precioCompra).toEqual('0')
+})
+
+
+test('DELETE /products/:id 204', async () => {
+	const { status } = await request(app())
+		.delete(`/api/${product.id}`)
+	expect(status).toBe(204)
+})
+
+test('DELETE /users/:id 404', async () => {
+	const { status } = await request(app())
+		.delete('/123456789098765432123456')
+	expect(status).toBe(404)
 })

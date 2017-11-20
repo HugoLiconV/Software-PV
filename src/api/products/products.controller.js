@@ -1,9 +1,12 @@
+import _ from 'lodash'
 import { success, notFound } from '../../services/response/'
 import { Product } from '.'
 
 export const create = ({ bodymen: {body} }, res, next) =>{
 	Product.create(body)
-	res.status(201).json(body);
+		.then(user => user.view(true))
+		.then(success(res, 201))
+		.catch(next)
 };
 
 export const index = (req, res, next) =>{
@@ -21,12 +24,17 @@ export const show	= ({ params }, res, next) =>{
 		.catch(next)
 };
 
-export const update = (req, res) =>{
-	// res.send('Updating product with id:' + req.params.id)
-	res.status(201);
-};
+export const update = ({ bodymen: { body }, params }, res, next) =>
+	Product.findById(params.id)
+		.then(notFound(res))
+		.then((product) => product ? _.merge(product, body).save() : null)
+		.then((product) => product ? product.view(true) : null)
+		.then(success(res))
+		.catch(next)
 
-export const destroy = (req, res) =>{
-	//res.send('Deleting product with id:' + req.params.id)
-	res.status(201);
-};
+export const destroy = ({ params }, res, next) =>
+	Product.findById(params.id)
+		.then(notFound(res))
+		.then((product) => product ? product.remove() : null)
+		.then(success(res, 204))
+		.catch(next)

@@ -50,6 +50,7 @@ productSchema.methods = {
 		const view = {
 			//simple view
 			id: this.id,
+			nombre: this.nombre,
 			cantidad: this.cantidad,
 			// proveedor: this.proveedor,
 			precioVenta: this.precioVenta,
