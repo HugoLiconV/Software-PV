@@ -1,18 +1,25 @@
 import { Router } from 'express'
-
+import { middleware as query } from 'querymen'
+import { middleware as body } from 'bodymen'
 import { create, index, show, update, destroy } from './suppliers.controller'
+import { schema } from './model'
+export Supplier, { schema } from './model'
 
-const router = new Router()
+const router = new Router();
+
+const { nombre, email, telefono, direccion } = schema.tree;
 
 // set the routes
 router.post('/',
-	create)
+	body({ nombre, email, telefono, direccion }),
+	create);
 router.get('/',
-	index)
+	index);
 router.get('/:id',
-	show)
+	show);
 router.put('/:id',
-	update)
+	body({ nombre, email, telefono, direccion }),
+	update);
 router.delete('/:id',
-	destroy)
+	destroy);
 export default router;

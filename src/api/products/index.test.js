@@ -68,7 +68,7 @@ test('DELETE /products/:id 204', async () => {
 	expect(status).toBe(204)
 })
 
-test('DELETE /users/:id 404', async () => {
+test('DELETE /products/:id 404', async () => {
 	const { status } = await request(app())
 		.delete('/123456789098765432123456')
 	expect(status).toBe(404)

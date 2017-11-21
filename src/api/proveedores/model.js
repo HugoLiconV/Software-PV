@@ -1,7 +1,7 @@
 import mongoose, { Schema } from 'mongoose'
 
 /*
-* Nombre, correo, telefono, direccion
+* Nombre, correo, email, direccion
 * */
 
 const supplierSchema = new Schema({
@@ -25,7 +25,29 @@ const supplierSchema = new Schema({
 	timestamps: true
 })
 
-const model = mongoose.model('Proveedor', supplierSchema)
+
+/*
+* Nombre, email, telefono, direccion
+* */
+
+supplierSchema.methods = {
+	view(full){
+		const view = {
+			//simple view
+			id: this.id,
+			nombre: this.nombre,
+			email: this.email,
+			telefono: this.telefono,
+			direccion: this.direccion,
+		}
+
+		return full ? {
+			...view
+		} : view
+	}
+}
+
+const model = mongoose.model('Supplier', supplierSchema)
 
 export const schema = model.schema
 export default model

@@ -7,6 +7,7 @@
 		"start": "node .",
 		"test": "jest --colors",
 		"test:products": "npm test src/api/products/index\".test\".js$",
+		"test:suppliers": "npm test src/api/proveedores/index\".test\".js$",
 		"test:unit": "npm test \"src/**/!(index).test.js\"",
 		"test:integration": "npm test \"src/**/index.test.js\"",
 		"coverage": "npm test -- --coverage",
