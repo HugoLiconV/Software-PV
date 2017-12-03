@@ -1,35 +1,32 @@
 import request from 'supertest-as-promised'
 import express from '../../services/express'
-import routes, { Product } from '.'
+import routes, { Register } from '.'
 
 const app = () => express(routes)
 
-let product
-
+let register
+/*
+* fecha, isActive, montoInicial
+* */
 beforeEach(async () =>{
-	product = await Product.create({
-		nombre: "Call of Duty: WWII",
-		cantidad: 1,
-		precioVenta: 200,
-		precioCompra: 150,
+	register = await Register.create({
+		isActive: true,
+		montoInicial: 200,
 	});
 })
 
-test('POST /products 201', async () => {
+test('POST /register 201', async () => {
 	const { status, body } = await request(app())
 		.post('/api')
-		.send({nombre: "test", cantidad: 2, precioVenta: 1,  precioCompra: 0,
-		})
+		.send({isActive: true, montoInicial: 200})
 	expect(status).toBe(201)
 	expect(typeof body).toEqual('object')
-	expect(body.nombre).toEqual('test')
-	expect(body.cantidad).toEqual(2)
-	expect(body.precioVenta).toEqual(1)
-	expect(body.precioCompra).toEqual(0)
+	expect(body.isActive).toEqual(true)
+	expect(body.montoInicial).toEqual(200)
 })
 
 
-test('GET /products 200', async () => {
+test('GET /register 200', async () => {
 	const { status, body } = await request(app())
 		.get('/api')
 	expect(status).toBe(200)
@@ -38,10 +35,10 @@ test('GET /products 200', async () => {
 
 test('GET /products/:id 200', async () => {
 	const { status, body } = await request(app())
-		.get(`/api/${product.id}`)
+		.get(`/api/${register.id}`)
 	expect(status).toBe(200)
 	expect(typeof body).toEqual('object')
-	expect(body.id).toEqual(product.id)
+	expect(body.id).toEqual(register.id)
 })
 
 test('GET /products/:id 404', async () => {
@@ -52,19 +49,17 @@ test('GET /products/:id 404', async () => {
 
 test('PUT /products/:id 200', async () => {
 	const { status, body } = await request(app())
-		.put(`/api/${product.id}`)
-		.send({nombre: "test", cantidad: "2", precioVenta: "1",  precioCompra: "0"})
+		.put(`/api/${register.id}`)
+		.send({isActive: true, montoInicial: 250})
 	expect(status).toBe(200)
-	expect(body.nombre).toEqual('test')
-	expect(body.cantidad).toEqual(2)
-	expect(body.precioVenta).toEqual(1)
-	expect(body.precioCompra).toEqual(0)
+	expect(body.isActive).toEqual(true)
+	expect(body.montoInicial).toEqual(250)
 })
 
 
 test('DELETE /products/:id 204', async () => {
 	const { status } = await request(app())
-		.delete(`/api/${product.id}`)
+		.delete(`/api/${register.id}`)
 	expect(status).toBe(204)
 })
 

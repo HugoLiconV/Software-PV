@@ -7,18 +7,18 @@ const productSchema = new Schema({
 		required: [true, 'Es necesario agregar un nombre al producto']
 	},
 	cantidad: {
-		type: String,
+		type: Number,
 		required: [true, 'Es necesario especificar la cantidad']
 	},
 	// proveedor: {
 	// 	type: String
 	// },
 	precioVenta: {
-		type: String,
+		type: Number,
 		required: [true, 'Es necesario especificar el precio de venta del producto']
 	},
 	precioCompra: {
-		type: String,
+		type: Number,
 		required: [true, 'Es necesario especificar el precio de compra del producto']
 	},
 	// categoria: {
