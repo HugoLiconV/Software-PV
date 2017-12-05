@@ -11,17 +11,11 @@ const registerSchema = new Schema({
 		type: Boolean,
 		default: false
 	},
-	// proveedor: {
-	// 	type: String
-	// },
 	montoInicial: {
 		type: Number,
 		required: [true, 'Es necesario especificar el precio de venta del producto']
 	},
-	// precioCompra: {
-	// 	type: Number,
-	// 	required: [true, 'Es necesario especificar el precio de compra del producto']
-	// },
+
 
 }, {
 	timestamps: true

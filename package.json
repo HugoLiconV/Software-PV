@@ -7,6 +7,8 @@
 		"start": "node .",
 		"test": "jest --colors",
 		"test:products": "npm test src/api/products/index\".test\".js$",
+		"test:transaction": "npm test src/api/transaction/index\".test\".js$",
+		"test:sales": "npm test src/api/ventas/index\".test\".js$",
 		"test:suppliers": "npm test src/api/proveedores/index\".test\".js$",
 		"test:register": "npm test src/api/caja/index\".test\".js$",
 		"test:unit": "npm test \"src/**/!(index).test.js\"",
